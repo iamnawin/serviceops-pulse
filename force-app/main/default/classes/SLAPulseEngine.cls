@@ -20,25 +20,24 @@ public inherited sharing class SLAPulseEngine {
         // 1. Identify cases missing entitlements when expected
         // For MVP, "expected" could mean any non-closed case, but we'll focus on those without EntitlementId
         // This is a setup risk/SLA blind spot.
-        for (Case c : [
-            SELECT Id, EntitlementId, Priority
-            FROM Case
-            WHERE Id IN :caseIds AND EntitlementId = null
-            WITH USER_MODE
-        ]) {
-            // Signal "Missing Entitlement" - we treat this as a specialized SLA Risk
-            // Age is 0 here because it's a binary check, or we use a priority-based "minutes" to trigger risk level.
-            // For MVP, we'll just check if a rule exists for "SLA Risk" with 0 threshold.
-            ServiceOps_Case_Signal__c signal = ServiceOpsSignalEvaluator.evaluateRisk(
-                c.Id, 
-                ServiceOpsConstants.SIGNAL_TYPE_SLA, 
-                0 // Immediate risk if rule for 0 exists
-            );
+        if (settings.Enable_Entitlement_Risk__c == true) {
+            for (Case c : [
+                SELECT Id, EntitlementId, Priority
+                FROM Case
+                WHERE Id IN :caseIds AND EntitlementId = null
+                WITH USER_MODE
+            ]) {
+                ServiceOps_Case_Signal__c signal = ServiceOpsSignalEvaluator.evaluateRisk(
+                    c.Id, 
+                    ServiceOpsConstants.SIGNAL_TYPE_SLA, 
+                    0 
+                );
 
-            if (signal != null) {
-                signal.Reason_Code__c = 'MISSING_ENTITLEMENT';
-                signal.Reason_Text__c = 'Case has no active entitlement process. SLA tracking is disabled.';
-                newSignals.add(signal);
+                if (signal != null) {
+                    signal.Reason_Code__c = 'MISSING_ENTITLEMENT';
+                    signal.Reason_Text__c = 'Case has no active entitlement process. SLA tracking is disabled.';
+                    newSignals.add(signal);
+                }
             }
         }
 

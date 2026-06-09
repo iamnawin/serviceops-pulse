@@ -21,7 +21,8 @@ public inherited sharing class ServiceOpsSignalService {
                    Agent_Email_Domain__c, Scan_Frequency_Minutes__c,
                    No_Touch_Threshold_Hours__c, Near_Breach_Threshold_Minutes__c,
                    Closed_Status_Values__c, Reply_Time_Calculation_Mode__c,
-                   Default_Business_Hours_Id__c
+                   Default_Business_Hours_Id__c, Scan_Window_Days__c,
+                   Enable_Entitlement_Risk__c
             FROM ServiceOps_Setting__mdt
             WHERE Is_Active__c = true
             LIMIT 1

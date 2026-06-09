@@ -7,10 +7,12 @@
 public inherited sharing class ServiceOpsScanBatch implements Database.Batchable<SObject>, Database.Stateful {
     
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        // Query open cases modified recently to avoid hitting 50M limits in enterprise orgs
-        return Database.getQueryLocator([
-            SELECT Id FROM Case WHERE IsClosed = false AND LastModifiedDate >= LAST_N_DAYS:30
-        ]);
+        ServiceOps_Setting__mdt settings = ServiceOpsSignalService.getSettings();
+        Integer windowDays = settings.Scan_Window_Days__c != null ? (Integer)settings.Scan_Window_Days__c : 30;
+
+        // Use dynamic SOQL safely to inject the configurable window
+        String query = 'SELECT Id FROM Case WHERE IsClosed = false AND LastModifiedDate >= LAST_N_DAYS:' + windowDays;
+        return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Case> scope) {
@@ -41,6 +43,7 @@ public inherited sharing class ServiceOpsScanBatch implements Database.Batchable
 
             Integer totalWaiting = 0;
             Integer totalQueueStuck = 0;
+            Integer totalSlaRisk = 0;
             Integer totalNearBreach = 0;
             Integer totalBreached = 0;
             Integer totalHigh = 0;
@@ -54,6 +57,7 @@ public inherited sharing class ServiceOpsScanBatch implements Database.Batchable
                 if (type == ServiceOpsConstants.SIGNAL_TYPE_REPLY) totalWaiting += count;
                 if (type == ServiceOpsConstants.SIGNAL_TYPE_QUEUE) totalQueueStuck += count;
                 if (type == ServiceOpsConstants.SIGNAL_TYPE_SLA) {
+                    totalSlaRisk += count;
                     if (level == ServiceOpsConstants.RISK_LEVEL_CRITICAL) totalBreached += count;
                     else totalNearBreach += count;
                 }
@@ -62,13 +66,18 @@ public inherited sharing class ServiceOpsScanBatch implements Database.Batchable
                 if (level == ServiceOpsConstants.RISK_LEVEL_CRITICAL) totalCritical += count;
             }
 
-            Integer openCases = [SELECT count() FROM Case WHERE IsClosed = false WITH USER_MODE];
+            // Using dynamic SOQL with bind variable for safety and flexibility
+            ServiceOps_Setting__mdt settings = ServiceOpsSignalService.getSettings();
+            Integer windowDays = settings.Scan_Window_Days__c != null ? (Integer)settings.Scan_Window_Days__c : 30;
+            String query = 'SELECT count() FROM Case WHERE IsClosed = false AND LastModifiedDate >= LAST_N_DAYS:' + windowDays;
+            Integer openCases = Database.countQuery(query);
 
             ServiceOps_Snapshot__c snap = new ServiceOps_Snapshot__c(
                 Snapshot_Date__c = DateTime.now(),
                 Total_Open_Cases__c = openCases,
                 Waiting_On_Agent__c = totalWaiting,
                 Queue_Stuck_Cases__c = totalQueueStuck,
+                SLA_Risk_Cases__c = totalSlaRisk,
                 Near_Breach__c = totalNearBreach,
                 Breached_Cases__c = totalBreached,
                 High_Risk_Cases__c = totalHigh,
