@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>serviceOpsSetupWizard</componentName>
+                <identifier>serviceOpsSetupWizard_1</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

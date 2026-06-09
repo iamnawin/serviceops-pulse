@@ -2,7 +2,6 @@
 <CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <brand>
         <headerColor>#0070D2</headerColor>
-        <shouldOverrideLogo>false</shouldOverrideLogo>
     </brand>
     <description>ServiceOps Pulse Command Center</description>
     <formFactors>Large</formFactors>

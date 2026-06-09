@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>serviceOpsHome</componentName>
+                <identifier>serviceOpsHome_1</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>

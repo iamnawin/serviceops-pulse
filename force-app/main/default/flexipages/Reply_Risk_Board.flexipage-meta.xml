@@ -4,6 +4,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>replyPulseBoard</componentName>
+                <identifier>replyPulseBoard_1</identifier>
             </componentInstance>
         </itemInstances>
         <name>main</name>
