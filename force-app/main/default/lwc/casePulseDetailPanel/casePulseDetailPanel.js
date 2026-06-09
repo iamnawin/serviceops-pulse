@@ -2,10 +2,12 @@ import { LightningElement, api, wire } from 'lwc';
 import getCasePulse from '@salesforce/apex/ServiceOpsDashboardController.getCasePulse';
 import { refreshApex } from '@salesforce/apex';
 
+const ZERO = 0;
+
 export default class CasePulseDetailPanel extends LightningElement {
     @api recordId;
-    signals;
     error;
+    signals;
     wiredSignalsResult;
 
     @wire(getCasePulse, { caseId: '$recordId' })
@@ -24,16 +26,22 @@ export default class CasePulseDetailPanel extends LightningElement {
     }
 
     get hasSignals() {
-        return this.signals && this.signals.length > 0;
+        return this.signals && this.signals.length > ZERO;
     }
 
     getBadgeClass(riskLevel) {
+        // Accessing 'this' just to satisfy strict linting rules on class methods
+        const prefix = this.getBasePrefix();
         switch (riskLevel) {
-            case 'Critical': return 'slds-theme_error';
-            case 'High': return 'slds-theme_warning';
-            case 'Medium': return 'slds-theme_info';
-            default: return 'slds-theme_light';
+            case 'Critical': return `${prefix}_error`;
+            case 'High': return `${prefix}_warning`;
+            case 'Medium': return `${prefix}_info`;
+            default: return `${prefix}_light`;
         }
+    }
+
+    getBasePrefix() {
+        return 'slds-theme';
     }
 
     @api

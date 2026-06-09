@@ -6,15 +6,17 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 export default class ServiceOpsSetupWizard extends LightningElement {
     @track currentStep = '1';
     @track settings = {
+        /* eslint-disable camelcase */
         Agent_Email_Domain__c: '',
         Reply_SLA_Hours__c: 4,
         Queue_Aging_Threshold_Hours__c: 24,
         Near_Breach_Threshold_Minutes__c: 30
+        /* eslint-enable camelcase */
     };
     isLoading = false;
 
     @wire(getSettings)
-    wiredSettings({ error, data }) {
+    wiredSettings({ data }) {
         if (data) {
             this.settings = { ...data };
         }
@@ -41,28 +43,30 @@ export default class ServiceOpsSetupWizard extends LightningElement {
         this.currentStep = prev.toString();
     }
 
-    async handleSave() {
+    handleSave() {
         this.isLoading = true;
-        try {
-            await saveSettings({
-                agentDomain: this.settings.Agent_Email_Domain__c,
-                replySla: this.settings.Reply_SLA_Hours__c,
-                queueAging: this.settings.Queue_Aging_Threshold_Hours__c,
-                nearBreach: this.settings.Near_Breach_Threshold_Minutes__c
-            });
+        saveSettings({
+            agentDomain: this.settings.Agent_Email_Domain__c,
+            replySla: this.settings.Reply_SLA_Hours__c,
+            queueAging: this.settings.Queue_Aging_Threshold_Hours__c,
+            nearBreach: this.settings.Near_Breach_Threshold_Minutes__c
+        })
+        .then(() => {
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Success',
                 message: 'Settings deployment initiated. It may take a minute to reflect.',
                 variant: 'success'
             }));
-        } catch (error) {
+        })
+        .catch(error => {
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Error',
                 message: 'Unable to save settings: ' + error.body.message,
                 variant: 'error'
             }));
-        } finally {
+        })
+        .finally(() => {
             this.isLoading = false;
-        }
+        });
     }
 }

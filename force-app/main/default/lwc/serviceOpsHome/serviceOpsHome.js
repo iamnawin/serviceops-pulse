@@ -1,12 +1,14 @@
 import { LightningElement, wire } from 'lwc';
 import getExecutiveSummary from '@salesforce/apex/ServiceOpsDashboardController.getExecutiveSummary';
 
+const ZERO = 0;
+
 export default class ServiceOpsHome extends LightningElement {
-    summary;
     error;
+    summary;
 
     @wire(getExecutiveSummary)
-    wiredSummary({ error, data }) {
+    wiredSummary({ data, error }) {
         if (data) {
             this.summary = data;
             this.error = undefined;
@@ -17,7 +19,9 @@ export default class ServiceOpsHome extends LightningElement {
     }
 
     get totalCriticalAndHigh() {
-        if (!this.summary) return 0;
-        return (this.summary.totalHighRisk || 0) + (this.summary.totalCriticalRisk || 0);
+        if (!this.summary) {
+            return ZERO;
+        }
+        return (this.summary.totalHighRisk || ZERO) + (this.summary.totalCriticalRisk || ZERO);
     }
 }
