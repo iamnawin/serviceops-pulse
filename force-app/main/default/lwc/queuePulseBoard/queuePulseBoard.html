@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Queue Risk Board" icon-name="standard:groups">
+        <div class="slds-p-around_small">
+            <template if:true={signals}>
+                <lightning-datatable
+                    key-field="Id"
+                    data={signals}
+                    columns={columns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+            <template if:true={error}>
+                <div class="slds-text-color_error">{error}</div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

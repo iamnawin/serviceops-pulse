@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <status>Active</status>
+</ApexClass>
+QUEUE = 'Queue Risk';
+    public static final String SIGNAL_TYPE_SLA = 'SLA Risk';
+    public static final String SIGNAL_TYPE_NO_TOUCH = 'No Touch';
+
+    // Risk Levels
+    public static final String RISK_LEVEL_LOW = 'Low';
+    public static final String RISK_LEVEL_MEDIUM = 'Medium';
+    public static final String RISK_LEVEL_HIGH = 'High';
+    public static final String RISK_LEVEL_CRITICAL = 'Critical';
+
+    // Signal Statuses
+    public static final String SIGNAL_STATUS_OPEN = 'Open';
+    public static final String SIGNAL_STATUS_RESOLVED = 'Resolved';
+    public static final String SIGNAL_STATUS_IGNORED = 'Ignored';
+}

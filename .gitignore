@@ -1,0 +1,24 @@
+# Salesforce DX
+.sfdx/
+.localdevserver/
+.sf/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Built files
+force-app/main/default/staticresources/*.resource-meta.xml
+force-app/main/default/staticresources/*.resource
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Python
+Docs/read_docx.py
+__pycache__/
+*.py[cod]
+*$py.class

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Defines risk thresholds for different signal types.</description>
+    <label>ServiceOps Risk Rule</label>
+    <pluralLabel>ServiceOps Risk Rules</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

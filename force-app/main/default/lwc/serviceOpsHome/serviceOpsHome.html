@@ -1,0 +1,38 @@
+<template>
+    <lightning-card title="ServiceOps Pulse Command Center" icon-name="custom:custom67">
+        <div class="slds-p-around_medium">
+            <template if:true={summary}>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4">
+                        <div class="slds-box slds-theme_shade slds-text-align_center">
+                            <div class="slds-text-heading_small">Reply Risk</div>
+                            <div class="slds-text-heading_large slds-m-top_small">{summary.totalReplyRisk}</div>
+                            <div class="slds-text-color_weak">Waiting on Agent</div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4">
+                        <div class="slds-box slds-theme_shade slds-text-align_center">
+                            <div class="slds-text-heading_small">Queue Risk</div>
+                            <div class="slds-text-heading_large slds-m-top_small">{summary.totalQueueRisk}</div>
+                            <div class="slds-text-color_weak">Stuck in Queue</div>
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="around-small" size="12" small-device-size="6" medium-device-size="4">
+                        <div class="slds-box slds-theme_shade slds-text-align_center">
+                            <div class="slds-text-heading_small">Critical & High</div>
+                            <div class="slds-text-heading_large slds-m-top_small slds-text-color_error">
+                                {totalCriticalAndHigh}
+                            </div>
+                            <div class="slds-text-color_weak">Needs Immediate Action</div>
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+            <template if:true={error}>
+                <div class="slds-text-color_error slds-p-around_medium">
+                    Unable to load ServiceOps summary. Please contact your admin.
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
