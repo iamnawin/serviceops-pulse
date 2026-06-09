@@ -53,4 +53,21 @@ public class ServiceOpsTestDataFactory {
         insert c;
         return c;
     }
+
+    public static Entitlement createEntitlement(Id accountId) {
+        Entitlement ent = new Entitlement(
+            Name = 'Test Entitlement',
+            AccountId = accountId,
+            StartDate = Date.today().addDays(-1),
+            EndDate = Date.today().addDays(1)
+        );
+        insert ent;
+        return ent;
+    }
+
+    public static Account createAccount(String name) {
+        Account acc = new Account(Name = name);
+        insert acc;
+        return acc;
+    }
 }

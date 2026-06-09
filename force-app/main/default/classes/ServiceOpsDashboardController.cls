@@ -70,4 +70,20 @@ public inherited sharing class ServiceOpsDashboardController {
             LIMIT 50
         ];
     }
+
+    /**
+     * Returns active signals for a specific case ID.
+     */
+    @AuraEnabled(cacheable=true)
+    public static List<ServiceOps_Case_Signal__c> getCasePulse(Id caseId) {
+        return [
+            SELECT Id, Signal_Type__c, Risk_Level__c, Reason_Code__c, Reason_Text__c,
+                   Suggested_Action__c, Detected_At__c, Time_Since_Customer_Reply_Min__c,
+                   Queue_Age_Min__c, Minutes_To_Breach__c
+            FROM ServiceOps_Case_Signal__c
+            WHERE Case__c = :caseId AND Status__c = :ServiceOpsConstants.SIGNAL_STATUS_OPEN
+            WITH USER_MODE
+            ORDER BY Detected_At__c DESC
+        ];
+    }
 }

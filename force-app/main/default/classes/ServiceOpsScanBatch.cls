@@ -23,7 +23,10 @@ public inherited sharing class ServiceOpsScanBatch implements Database.Batchable
         // 2. Scan Queue Risks
         QueuePulseService.scanQueueRisks(caseIds);
 
-        // Future Phases: SLA Risks, Case Aging, etc.
+        // 3. Scan SLA Risks
+        SLAPulseService.scanSlaRisks(caseIds);
+
+        // Future Phases: Case Aging, etc.
     }
 
     public void finish(Database.BatchableContext bc) {

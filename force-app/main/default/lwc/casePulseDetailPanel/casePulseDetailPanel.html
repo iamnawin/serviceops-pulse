@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="ServiceOps Case Pulse" icon-name="custom:custom67">
+        <div class="slds-p-around_small">
+            <template if:true={signals}>
+                <template if:false={hasSignals}>
+                    <div class="slds-text-color_weak slds-text-align_center slds-p-around_medium">
+                        No active operational risks detected for this case.
+                    </div>
+                </template>
+                <template if:true={hasSignals}>
+                    <template for:each={signals} for:item="signal">
+                        <div key={signal.Id} class="slds-box slds-m-bottom_small slds-theme_shade">
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_x-small">
+                                <span class="slds-text-heading_small">{signal.Signal_Type__c}</span>
+                                <lightning-badge label={signal.Risk_Level__c} class={signal.riskBadgeClass}></lightning-badge>
+                            </div>
+                            <div class="slds-text-body_small slds-m-bottom_x-small">
+                                <strong>Detected:</strong> <lightning-formatted-date-time value={signal.Detected_At__c} hour="2-digit" minute="2-digit"></lightning-formatted-date-time>
+                            </div>
+                            <div class="slds-text-body_regular slds-m-bottom_x-small">
+                                {signal.Reason_Text__c}
+                            </div>
+                            <div class="slds-box slds-theme_inverse slds-m-top_small slds-p-around_x-small">
+                                <strong>Suggested Action:</strong> {signal.Suggested_Action__c}
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </template>
+            <template if:true={error}>
+                <div class="slds-text-color_error">Unable to load case pulse details.</div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

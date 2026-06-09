@@ -1,0 +1,57 @@
+<template>
+    <lightning-card title="ServiceOps Pulse Setup Wizard" icon-name="standard:settings">
+        <div class="slds-p-around_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alt-text="Deploying settings..."></lightning-spinner>
+            </template>
+
+            <lightning-progress-indicator current-step={currentStep} type="path" variant="base">
+                <lightning-progress-step label="Email Domain" value="1"></lightning-progress-step>
+                <lightning-progress-step label="Thresholds" value="2"></lightning-progress-step>
+                <lightning-progress-step label="Activation" value="3"></lightning-progress-step>
+            </lightning-progress-indicator>
+
+            <div class="slds-m-top_large">
+                <!-- Step 1: Agent Email Domain -->
+                <template if:true={isStep1}>
+                    <div class="slds-text-heading_small slds-m-bottom_medium">Define Internal Agent Domain</div>
+                    <p class="slds-m-bottom_medium">
+                        This helps ServiceOps Pulse distinguish between customer replies and internal agent updates.
+                    </p>
+                    <lightning-input label="Agent Email Domain (e.g. company.com)" value={settings.Agent_Email_Domain__c} onchange={handleDomainChange}></lightning-input>
+                </template>
+
+                <!-- Step 2: Risk Thresholds -->
+                <template if:true={isStep2}>
+                    <div class="slds-text-heading_small slds-m-bottom_medium">Set Operational Thresholds</div>
+                    <lightning-input type="number" label="Reply SLA (Hours)" value={settings.Reply_SLA_Hours__c} onchange={handleReplySlaChange}></lightning-input>
+                    <lightning-input type="number" label="Queue Aging Limit (Hours)" value={settings.Queue_Aging_Threshold_Hours__c} onchange={handleQueueAgingChange}></lightning-input>
+                    <lightning-input type="number" label="Near Breach Warning (Minutes)" value={settings.Near_Breach_Threshold_Minutes__c} onchange={handleNearBreachChange}></lightning-input>
+                </template>
+
+                <!-- Step 3: Activation -->
+                <template if:true={isStep3}>
+                    <div class="slds-text-heading_small slds-m-bottom_medium">Ready to Pulse?</div>
+                    <p class="slds-m-bottom_medium">
+                        Click 'Save and Activate' to deploy these settings and start the operational scan.
+                    </p>
+                    <div class="slds-box slds-theme_shade">
+                        <strong>Agent Domain:</strong> {settings.Agent_Email_Domain__c}<br/>
+                        <strong>Reply SLA:</strong> {settings.Reply_SLA_Hours__c} hrs<br/>
+                        <strong>Queue Limit:</strong> {settings.Queue_Aging_Threshold_Hours__c} hrs
+                    </div>
+                </template>
+            </div>
+
+            <div class="slds-m-top_large slds-grid slds-grid_align-spread">
+                <lightning-button label="Previous" onclick={handlePrev} disabled={isFirstStep}></lightning-button>
+                <template if:false={isLastStep}>
+                    <lightning-button variant="brand" label="Next" onclick={handleNext}></lightning-button>
+                </template>
+                <template if:true={isLastStep}>
+                    <lightning-button variant="brand" label="Save and Activate" onclick={handleSave}></lightning-button>
+                </template>
+            </div>
+        </div>
+    </lightning-card>
+</template>
