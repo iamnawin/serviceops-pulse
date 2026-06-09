@@ -1,5 +1,10 @@
 {
-  "orgName": "Demo company",
+  "orgName": "ServiceOps Pulse Dev",
   "edition": "Developer",
-  "features": []
+  "features": ["Entitlements"],
+  "settings": {
+    "entitlementSettings": {
+      "enableEntitlements": true
+    }
+  }
 }
