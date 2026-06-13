@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Layer 2: Code - Apex and LWC. Depends on: core (objects/fields, Entitlement settings). -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>QueuePulseEngine</members>
+        <members>QueuePulseEngineTest</members>
+        <members>QueuePulseService</members>
+        <members>ReplyPulseEngine</members>
+        <members>ReplyPulseEngineTest</members>
+        <members>ReplyPulseService</members>
+        <members>SLAPulseEngine</members>
+        <members>SLAPulseEngineTest</members>
+        <members>SLAPulseService</members>
+        <members>ServiceOpsConstants</members>
+        <members>ServiceOpsDashboardController</members>
+        <members>ServiceOpsDashboardCtrlTest</members>
+        <members>ServiceOpsScanBatch</members>
+        <members>ServiceOpsScanScheduler</members>
+        <members>ServiceOpsScanSchedulerTest</members>
+        <members>ServiceOpsSetupController</members>
+        <members>ServiceOpsSetupCtrlTest</members>
+        <members>ServiceOpsSetupService</members>
+        <members>ServiceOpsSignalEvaluator</members>
+        <members>ServiceOpsSignalEvaluatorTest</members>
+        <members>ServiceOpsSignalService</members>
+        <members>ServiceOpsTestDataFactory</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>casePulseDetailPanel</members>
+        <members>queuePulseBoard</members>
+        <members>replyPulseBoard</members>
+        <members>serviceOpsHome</members>
+        <members>serviceOpsSetupWizard</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <version>62.0</version>
+</Package>

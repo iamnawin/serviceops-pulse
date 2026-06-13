@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Layer 4: UI - Custom Tabs. Depends on: flexipages (all tabs are Lightning Page tabs). -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Queue_Risk_Board</members>
+        <members>Reply_Risk_Board</members>
+        <members>ServiceOps_Pulse_Home</members>
+        <members>ServiceOps_Setup</members>
+        <name>CustomTab</name>
+    </types>
+    <version>62.0</version>
+</Package>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Layer 5: Application. Depends on: ui (the app navigation references all four tabs). -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ServiceOps_Pulse</members>
+        <name>CustomApplication</name>
+    </types>
+    <version>62.0</version>
+</Package>

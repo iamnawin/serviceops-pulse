@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Layer 7: Full package - everything. Used for final validation after the
+     layered deploys, or as a single deploy once Entitlement Management is
+     already enabled in the target org. -->
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Entitlement</members>
+        <name>Settings</name>
+    </types>
     <types>
         <members>QueuePulseEngine</members>
         <members>QueuePulseEngineTest</members>
@@ -126,10 +133,6 @@
         <members>ServiceOps_Agent</members>
         <members>ServiceOps_Manager</members>
         <name>PermissionSet</name>
-    </types>
-    <types>
-        <members>Entitlement</members>
-        <name>Settings</name>
     </types>
     <version>62.0</version>
 </Package>
